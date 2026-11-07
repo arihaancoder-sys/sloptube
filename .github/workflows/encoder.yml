@@ -1,0 +1,59 @@
+name: encoder
+
+# Builds the encoder worker image when worker/ or ops/encoder/ changes on the
+# release branch. The encoder box pulls :latest every 5 minutes.
+#   git push origin main:release
+on:
+  push:
+    branches: [release]
+    paths:
+      - "worker/**"
+      - "ops/encoder/**"
+      - ".github/workflows/encoder.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: encoder-release
+  cancel-in-progress: true
+
+jobs:
+  image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # The worker tests, including the real ffmpeg encode, before anything ships.
+      - name: Test the worker
+        run: |
+          sudo apt-get update -y && sudo apt-get install -y --no-install-recommends ffmpeg
+          npm ci --prefix worker --no-audit --no-fund
+          node --test worker/
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: worker
+          file: ops/encoder/Dockerfile
+          push: true
+          build-args: |
+            GIT_SHA=${{ github.sha }}
+          tags: |
+            ghcr.io/myfilehero/sloptube-encoder:latest
+            ghcr.io/myfilehero/sloptube-encoder:${{ github.sha }}
+          cache-from: type=gha,scope=encoder
+          cache-to: type=gha,mode=max,scope=encoder

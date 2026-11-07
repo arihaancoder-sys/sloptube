@@ -1,0 +1,20 @@
+name: Feature idea
+description: Suggest something sloptube could do
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What would it solve
+      description: The problem or the use, in a few sentences.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+      description: How it could work. Every feature ships behind a flag, so it can be small.
+  - type: textarea
+    id: other
+    attributes:
+      label: Anything else

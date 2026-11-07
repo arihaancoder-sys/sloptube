@@ -1,0 +1,19 @@
+{
+  "name": "sloptube-encoder",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "The sloptube encoder worker. Start it with `npm start` (node index.mjs). `main` points at the tests so `node --test worker/` runs them all.",
+  "main": "test/index.mjs",
+  "scripts": {
+    "start": "node index.mjs",
+    "test": "node --test test/"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1161.0",
+    "@supabase/supabase-js": "^2.118.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

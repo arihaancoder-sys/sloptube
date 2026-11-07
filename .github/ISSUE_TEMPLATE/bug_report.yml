@@ -1,0 +1,46 @@
+name: Bug report
+description: Something in sloptube does not work as it should
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. **Security problems go through private reporting instead** (see SECURITY.md), not here.
+        Please leave out keys, passwords, connection strings and other people's personal data.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected and what you saw instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Switch on the `watch` flag
+        2. Open /watch?v=...
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: The commit, or what /api/version answers.
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where
+      options:
+        - npm run dev
+        - npm run demo
+        - Self hosted (Docker)
+        - The encoder worker
+        - Other
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: With secrets removed.

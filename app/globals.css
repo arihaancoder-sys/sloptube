@@ -1,0 +1,383 @@
+@import "tailwindcss";
+
+/*
+ * The 2019 to 2020 YouTube look.
+ * Light is the default. Dark is switched on by the "dark" class on <html>,
+ * set before first paint by the inline script in app/layout.tsx.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --page: #f9f9f9;
+  --surface: #ffffff;
+  --text: #030303;
+  --text-2: #606060;
+  /* Tertiary text. #717171 and #8a8a8a pass 4.5:1 on the page and the surface (feature 15). */
+  --text-3: #717171;
+  --link: #065fd4;
+  --red: #cc0000;
+  /* The brand green (lib/brand.ts): the mark, active guide icons and thumbnail progress. */
+  --mark: #16a34a;
+  /* "slop" in the wordmark; "tube" uses the text color. */
+  --logo-word: #15803d;
+  --divider: #e5e5e5;
+  --hover: #f2f2f2;
+  --active: #e5e5e5;
+  --icon: #606060;
+  --input-border: #cccccc;
+  --input-bg: #ffffff;
+  --search-btn: #f8f8f8;
+  --search-btn-border: #d3d3d3;
+  --skeleton: #e8e8e8;
+  --menu-shadow: 0 4px 32px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.1);
+  --focus: #1c62b9;
+  --error: #cc0000;
+  --progress: #065fd4;
+  --progress-track: #e5e5e5;
+  --sub-bg: #ececec;
+  --recent: #551a8b;
+  /* The creator studio's left nav and its selection bar (feature 12): dark in both themes. */
+  --studio-nav: #282828;
+  --studio-nav-hover: #3a3a3a;
+  --studio-nav-active: #1b1b1b;
+  --studio-nav-text: #ffffff;
+  --studio-nav-text-2: #aaaaaa;
+  --studio-accent: #065fd4;
+  --studio-page: #f9f9f9;
+  color-scheme: light;
+}
+
+:root.dark {
+  --page: #181818;
+  --surface: #202020;
+  --text: #ffffff;
+  --text-2: #aaaaaa;
+  --text-3: #8a8a8a;
+  --link: #3ea6ff;
+  --red: #cc0000;
+  --mark: #22c55e;
+  --logo-word: #4ade80;
+  --divider: #383838;
+  --hover: #303030;
+  --active: #383838;
+  --icon: #909090;
+  --input-border: #303030;
+  --input-bg: #121212;
+  --search-btn: #323232;
+  --search-btn-border: #303030;
+  --skeleton: #303030;
+  --menu-shadow: 0 4px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  --focus: #3ea6ff;
+  --error: #ff4e45;
+  --progress: #3ea6ff;
+  --progress-track: #383838;
+  --sub-bg: #383838;
+  --recent: #c58af9;
+  --studio-nav: #1f1f1f;
+  --studio-nav-hover: #303030;
+  --studio-nav-active: #121212;
+  --studio-nav-text: #ffffff;
+  --studio-nav-text-2: #aaaaaa;
+  --studio-accent: #3ea6ff;
+  --studio-page: #181818;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-text: var(--text);
+  --color-text-2: var(--text-2);
+  --color-text-3: var(--text-3);
+  --color-link: var(--link);
+  --color-red: var(--red);
+  --color-divider: var(--divider);
+  --color-hover: var(--hover);
+  --color-active: var(--active);
+  --color-icon: var(--icon);
+  --color-skeleton: var(--skeleton);
+  --color-error: var(--error);
+  --font-sans: var(--font-roboto), Roboto, Arial, sans-serif;
+  /* YouTube breakpoints: icon rail from 792 px, full guide from 1313 px */
+  --breakpoint-tab: 792px;
+  --breakpoint-wide: 1313px;
+  --breakpoint-search: 656px;
+  /* The history page puts its buttons in a right column from 1016 px, like the watch page. */
+  --breakpoint-history: 1016px;
+}
+
+@layer base {
+  html {
+    background: var(--page);
+  }
+
+  body {
+    background: var(--page);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 14px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .link {
+    color: var(--link);
+  }
+
+  .link:hover {
+    text-decoration: underline;
+  }
+}
+
+@layer components {
+  /* Text field in the 2019 sign in style */
+  .field {
+    width: 100%;
+    height: 48px;
+    border: 1px solid var(--input-border);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--text);
+    padding: 0 14px;
+    font-size: 16px;
+    outline: none;
+  }
+
+  .field:focus {
+    border-color: var(--focus);
+    box-shadow: inset 0 0 0 1px var(--focus);
+  }
+
+  .field:disabled {
+    opacity: 0.6;
+  }
+
+  textarea.field {
+    height: auto;
+    padding: 12px 14px;
+    resize: vertical;
+  }
+
+  /* Blue uppercase button, like SIGN IN and SAVE in 2019 */
+  .btn-blue {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 2px;
+    background: var(--link);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.007px;
+    text-transform: uppercase;
+  }
+
+  .btn-blue:disabled {
+    opacity: 0.5;
+  }
+
+  .btn-text {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 2px;
+    color: var(--text-2);
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+
+  .btn-text:hover {
+    background: var(--hover);
+  }
+}
+
+/*
+ * The watch page grid (components/watch/WatchLayout.tsx), 2019 sizes:
+ * a primary column up to 1280 px and a 402 px Up next column from 1016 px,
+ * stacked below that. Theater mode spans the player across the whole width.
+ */
+.watch-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "player" "info" "side" "comments";
+}
+
+.watch-player {
+  grid-area: player;
+  min-width: 0;
+}
+
+.watch-info {
+  grid-area: info;
+  min-width: 0;
+}
+
+.watch-side {
+  grid-area: side;
+  min-width: 0;
+}
+
+.watch-comments {
+  grid-area: comments;
+  min-width: 0;
+}
+
+.watch-player-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+@media (min-width: 1016px) {
+  .watch-grid {
+    grid-template-columns: minmax(24px, 1fr) minmax(0, 1280px) 24px 402px minmax(24px, 1fr);
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+      ". player . side ."
+      ". info . side ."
+      ". comments . side .";
+    padding-top: 24px;
+  }
+
+  .watch-grid[data-theater="true"] {
+    grid-template-areas:
+      "player player player player player"
+      ". info . side ."
+      ". comments . side .";
+    padding-top: 0;
+  }
+
+  .watch-grid[data-theater="true"] .watch-player {
+    background: #000;
+  }
+
+  .watch-grid[data-theater="true"] .watch-player-box {
+    aspect-ratio: auto;
+    height: min(56.25vw, calc(100dvh - 169px));
+    min-height: 480px;
+  }
+
+  .watch-grid[data-theater="true"] .watch-side {
+    padding-top: 24px;
+  }
+}
+
+/*
+ * The 2019 history page: the list (up to 860 wide) with the right column
+ * (History type, Clear all, Pause) beside it from 1016 px. Narrower, the
+ * buttons sit above the list.
+ */
+.history-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+.history-side {
+  order: -1;
+}
+
+@media (min-width: 1016px) {
+  .history-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 860px) 300px;
+    justify-content: center;
+    column-gap: 48px;
+  }
+
+  .history-side {
+    order: 0;
+    position: sticky;
+    top: 80px;
+    align-self: start;
+    padding-top: 24px;
+  }
+}
+
+/*
+ * The public pages (/about, /terms, /privacy, /guidelines, /press, /contact):
+ * 2019 help center text, 16 px with room between paragraphs.
+ */
+.prose-2019 {
+  color: var(--text);
+  font-size: 15px;
+  line-height: 24px;
+}
+
+.prose-2019 p + p,
+.prose-2019 p + ul,
+.prose-2019 ul + p {
+  margin-top: 12px;
+}
+
+.prose-2019 ul {
+  list-style: disc;
+  padding-left: 24px;
+}
+
+.prose-2019 li + li {
+  margin-top: 6px;
+}
+
+.prose-2019 a {
+  color: var(--link);
+}
+
+.prose-2019 a:hover {
+  text-decoration: underline;
+}
+
+/*
+ * Keyboard focus (feature 15): a visible ring on anything focused with the
+ * keyboard, never on a mouse click. Fields keep their own blue border.
+ */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.field:focus-visible {
+  outline: none;
+}
+
+/* "Skip to content": off screen until it is focused, then top left over the top bar. */
+.skip-link {
+  position: fixed;
+  left: 8px;
+  top: -48px;
+  z-index: 60;
+  padding: 8px 16px;
+  border-radius: 2px;
+  background: var(--link);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.skip-link:focus {
+  top: 8px;
+}
+
+/* /embed/<id> (feature 16): the player alone, without the top bar, guide or footer. */
+html:has([data-embed-page]),
+html:has([data-embed-page]) body {
+  overflow: hidden;
+  background: #000;
+}
+html:has([data-embed-page]) body {
+  padding-top: 0;
+}
+html:has([data-embed-page]) body > header,
+html:has([data-embed-page]) body > .skip-link,
+html:has([data-embed-page]) body > .flex > :not(:has([data-embed-page])),
+html:has([data-embed-page]) [data-site-footer] {
+  display: none;
+}

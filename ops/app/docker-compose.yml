@@ -1,0 +1,18 @@
+# Runs the sloptube image. install.sh writes a copy of this file to
+# /opt/sloptube/docker-compose.yml on the server.
+#
+# By default it listens on 127.0.0.1:3000. The update script starts a second
+# copy on 3001 (blue/green) by setting PORT and a different project name:
+#   PORT=3001 docker compose -p sloptube-green up -d
+services:
+  app:
+    image: ghcr.io/myfilehero/sloptube:${TAG:-latest}
+    restart: unless-stopped
+    env_file: /opt/sloptube/.env
+    ports:
+      - "127.0.0.1:${PORT:-3000}:3000"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

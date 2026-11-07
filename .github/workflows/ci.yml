@@ -1,0 +1,58 @@
+name: ci
+
+# The checks from CONTRIBUTING.md on every pull request and every push to main.
+# No secrets needed: the app is built and smoke tested without a database.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  app:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # the whole history, for the secret scan
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm run lint
+      - name: Secret scan of the whole history
+        run: node scripts/check-secrets.mjs --history
+      - run: npm test
+      - run: npm run build
+
+      - name: Smoke test without a database
+        run: |
+          npx next start -p 3123 > next.log 2>&1 &
+          for i in $(seq 60); do curl -fsS http://localhost:3123/api/health >/dev/null && break; sleep 1; done
+          node scripts/smoke.mjs http://localhost:3123 || { cat next.log; exit 1; }
+
+  worker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+      - name: Install ffmpeg (for the real encode test)
+        run: sudo apt-get update -q && sudo apt-get install -y -q --no-install-recommends ffmpeg
+      - run: npm ci --prefix worker --no-audit --no-fund
+      - run: node --test worker/

@@ -1,0 +1,44 @@
+{
+  "name": "sloptube",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "node scripts/check-secrets.mjs && eslint",
+    "typecheck": "next typegen && tsc --noEmit",
+    "smoke": "node scripts/smoke.mjs",
+    "demo": "node scripts/demo.mjs",
+    "db:migrations": "node scripts/db-migrations.mjs",
+    "secrets:history": "node scripts/check-secrets.mjs --history",
+    "test": "node --test tests/"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1161.0",
+    "@aws-sdk/s3-request-presigner": "^3.1161.0",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.118.0",
+    "hls.js": "1.7.3",
+    "next": "16.4.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1",
+    "zustand": "^5.0.16"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "axe-core": "^4.14.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.5",
+    "lighthouse": "^13.6.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
