@@ -8,6 +8,12 @@
   A video platform, built in the open one feature at a time.
 </p>
 
+> [!IMPORTANT]
+> **This is source code, not an app you can sign up for.** There is no official
+> sloptube website, no app to download and no accounts to make. Any site calling
+> itself sloptube is not run by us. If you want to try it, run your own copy:
+> see [Quick start](#quick-start).
+
 sloptube is an open source video site with the feel of the 2019 to 2020 era:
 channels, uploads, a watch page with HLS playback, a home feed, subscriptions,
 search, likes, comments, Snips (short vertical videos), a creator studio with
