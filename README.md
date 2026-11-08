@@ -14,6 +14,9 @@
 > itself sloptube is not run by us. If you want to try it, run your own copy:
 > see [Quick start](#quick-start).
 
+sloptube is an independent open source project. It is not affiliated with, endorsed by or
+connected to YouTube or Google.
+
 sloptube is an open source video site with the feel of the 2019 to 2020 era:
 channels, uploads, a watch page with HLS playback, a home feed, subscriptions,
 search, likes, comments, Snips (short vertical videos), a creator studio with
