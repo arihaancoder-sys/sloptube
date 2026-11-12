@@ -27,6 +27,7 @@
     "zustand": "^5.0.16"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "^1.20.16",
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -36,7 +37,8 @@
     "eslint-config-next": "16.4.5",
     "lighthouse": "^13.6.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.160.1"
   },
   "engines": {
     "node": ">=22"
