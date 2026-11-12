@@ -22,7 +22,7 @@ export type R2ClientConfig = {
 export function createR2Client(config: R2ClientConfig): S3Client {
   return new S3Client({
     region: "auto",
-    endpoint: `https://${config.accountId}.r2.cloudflarestorage.com`,
+    endpoint: config.accountId === "local" ? "http://localhost:9000" : `https://${config.accountId}.r2.cloudflarestorage.com`,
     credentials: { accessKeyId: config.accessKeyId, secretAccessKey: config.secretAccessKey },
     // https://<account>.r2.cloudflarestorage.com/<bucket>/<key>, one host for every bucket.
     forcePathStyle: true,

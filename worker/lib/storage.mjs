@@ -17,7 +17,7 @@ import {
 export function createR2Client({ accountId, accessKeyId, secretAccessKey }) {
   return new S3Client({
     region: "auto",
-    endpoint: `https://${accountId}.r2.cloudflarestorage.com`,
+    endpoint: accountId === "local" ? "http://localhost:9000" : `https://${accountId}.r2.cloudflarestorage.com`,
     credentials: { accessKeyId, secretAccessKey },
     forcePathStyle: true,
     requestChecksumCalculation: "WHEN_REQUIRED",
