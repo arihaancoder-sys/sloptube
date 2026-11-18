@@ -16,8 +16,8 @@ import {
 /** An S3 client pointed at the account's R2 endpoint (same settings as lib/upload/r2.ts in the app). */
 export function createR2Client({ accountId, accessKeyId, secretAccessKey }) {
   return new S3Client({
-    region: "auto",
-    endpoint: accountId === "local" ? "http://localhost:9000" : `https://${accountId}.r2.cloudflarestorage.com`,
+    region: "ap-northeast-1",
+    endpoint: accountId === "local" ? "http://localhost:9000" : `https://supabase.co`,
     credentials: { accessKeyId, secretAccessKey },
     forcePathStyle: true,
     requestChecksumCalculation: "WHEN_REQUIRED",
