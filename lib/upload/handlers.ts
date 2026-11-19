@@ -144,9 +144,10 @@ export async function signUpload(rawBody: unknown, ctx: UploadContext): Promise<
   let uploadId: string;
   try {
     uploadId = await g.storage.createMultipart(key, mime);
-  } catch {
+  } catch (err) {
     await g.db.abandonUpload(videoId, "storage error");
-    return fail(502, "storage_error");
+    const msg = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
+    return { status: 502, body: { error: "storage_error", message: msg } };
   }
 
   const plan = planParts(bytes);
