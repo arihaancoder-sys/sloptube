@@ -17,7 +17,7 @@ import {
 export function createR2Client({ accountId, accessKeyId, secretAccessKey }) {
   return new S3Client({
     region: "ap-northeast-1",
-    endpoint: accountId === "local" ? "http://localhost:9000" : `https://supabase.co`,
+    endpoint: "https://ncstbtsfukqswmcdjxax.storage.supabase.co/storage/v1/s3",
     credentials: { accessKeyId, secretAccessKey },
     forcePathStyle: true,
     requestChecksumCalculation: "WHEN_REQUIRED",
